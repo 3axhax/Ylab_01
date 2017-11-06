@@ -13,14 +13,14 @@ class FruitsComponent extends CBitrixComponent
             $listElement = CIBlockElement::GetList(array(),$arFilter,false,false, $arSelect);
             if ($listElement->result->num_rows == 0) return 'no such component';
 
-            // формируем результирующий массив, "пробегаясь" по отобранным элементам
+            // формируем результирующий массив, "пробегаясь" по отобранным элементам, ищя свойство "TITLE"
             $res = array();
+            $arFilterProperty = Array("CODE" => "TITLE");
             while($id_element = $listElement->Fetch())
             {
-                $element = CIBlockElement::GetProperty($id_iblock, $id_element["ID"]);
+                $element = CIBlockElement::GetProperty($id_iblock, $id_element["ID"], array(), $arFilterProperty);
                 $element = $element->Fetch();
-                $res[]["id"] = $id_element["ID"];
-                $res[]["title"] = $element["VALUE"];
+                $res[] = Array("id" => $id_element["ID"], "title" => $element["VALUE"]);
             }
 
             return $res ? $res : 'empty result';
