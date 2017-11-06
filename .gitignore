@@ -1,0 +1,5 @@
+bitrix
+.vagrant
+upload
+!upload/
+.idea
